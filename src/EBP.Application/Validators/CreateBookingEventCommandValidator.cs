@@ -13,6 +13,12 @@ namespace EBP.Application.Validators
                 .NotEmpty();
             RuleFor(x => x.Duration)
                 .NotEmpty();
+            RuleFor(x => x.StandartTicketsCount)
+                .GreaterThanOrEqualTo(0);
+            RuleFor(x => x.VipTicketsCount)
+                .GreaterThanOrEqualTo(0);
+            RuleFor(x => x.StudentTicketsCount)
+                .GreaterThanOrEqualTo(0);
         }
     }
 }

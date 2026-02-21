@@ -1,14 +1,16 @@
 ﻿using EBP.Application.Commands;
 using EBP.Domain.Entities;
 using EBP.Domain.Exceptions;
+using EBP.Domain.Providers;
 using EBP.Domain.Repositories;
 using EBP.Domain.ValueObjects;
 using MediatR;
+using System.Data;
 
 namespace EBP.Application.UseCases
 {
     internal class CreateBookingEventUseCase(
-        TimeProvider _timeProvider,
+        ITimeProvider _timeProvider,
         IBookingEventRepository bookingEventRepository)
         : IRequestHandler<CreateBookingEventCommand, BookingEvent>
     {
@@ -19,7 +21,10 @@ namespace EBP.Application.UseCases
                 request.Description,
                 request.StartAt,
                 request.Duration,
-                _timeProvider.GetUtcNow().DateTime);
+                request.StandartTicketsCount,
+                request.VipTicketsCount,
+                request.StudentTicketsCount,
+                _timeProvider.Now);
 
             var result = await bookingEventRepository.AddAsync(newBookingEvent, cancellationToken);
             if (result == BookingEventCreationResult.NameAlreadyExists)

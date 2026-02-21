@@ -7,7 +7,10 @@ namespace EBP.Application.Commands
         string? Name,
         string? Description,
         DateTime StartAt,
-        TimeSpan Duration)
+        TimeSpan Duration,
+        int StandartTicketsCount,
+        int VipTicketsCount,
+        int StudentTicketsCount)
         : IRequest<BookingEvent>
     {
     }

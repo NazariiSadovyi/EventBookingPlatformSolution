@@ -9,8 +9,6 @@ namespace EBP.Application
     {
         public static void AddApplication(this IServiceCollection services)
         {
-            services.AddScoped(_ => TimeProvider.System);
-
             services.AddMediatR(_ => _
                 .AddOpenBehavior(typeof(ValidationPipelineBehavior<,>))
                 .RegisterServicesFromAssemblyContaining<CreateBookingEventCommand>());

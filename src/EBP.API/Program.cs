@@ -1,6 +1,7 @@
 using EBP.API.Middlewares;
 using EBP.Application;
 using EBP.Infrastructure;
+using EBP.Infrastructure.BackgroundJob;
 using Microsoft.EntityFrameworkCore;
 
 namespace EBP.API
@@ -20,6 +21,7 @@ namespace EBP.API
 
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
+            builder.Services.AddInfrastructureBackgroundJob(builder.Configuration);
 
             var app = builder.Build();
 

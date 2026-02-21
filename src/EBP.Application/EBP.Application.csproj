@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EBP.Domain\EBP.Domain.csproj" />
+    <ProjectReference Include="..\EBP.Infrastructure.BackgroundJob\EBP.Infrastructure.BackgroundJob.csproj" />
     <ProjectReference Include="..\EBP.Infrastructure\EBP.Infrastructure.csproj" />
   </ItemGroup>
 

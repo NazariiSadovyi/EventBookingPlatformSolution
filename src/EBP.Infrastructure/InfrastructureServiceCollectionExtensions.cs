@@ -1,4 +1,5 @@
-﻿using EBP.Domain.Repositories;
+﻿using EBP.Domain.Providers;
+using EBP.Domain.Repositories;
 using EBP.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,8 @@ namespace EBP.Infrastructure
             services.AddDbContext<ApplicationDbContext>(_ => _.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IDbSessionRepository, DbSessionRepository>();
             services.AddScoped<IBookingEventRepository, BookingEventRepository>();
+            services.AddScoped<IBookingTicketRepository, BookingTicketRepository>();
+            services.AddScoped<ITimeProvider, Providers.TimeProvider>();
         }
     }
 }

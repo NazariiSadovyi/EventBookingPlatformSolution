@@ -19,15 +19,22 @@ namespace EBP.Infrastructure.EntityConfigurations
             builder.HasIndex(x => x.Name)
                    .IsUnique();
 
-            builder.Property(x => x.Desciption)
-                   .HasMaxLength(1000);
+            builder.Property(x => x.Desciption);
 
             builder.Property(x => x.StartAt)
                    .IsRequired();
 
             builder.Property(x => x.Duration)
+                   .IsRequired();
+
+            builder.HasMany(x => x.Tickets)
+                   .WithOne(x => x.BookingEvent)
+                   .HasForeignKey("BookingEventId")
                    .IsRequired()
-                   .HasConversion(v => v, v => v);
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Navigation(x => x.Tickets)
+                   .UsePropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }
