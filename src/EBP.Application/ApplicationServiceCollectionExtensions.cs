@@ -1,4 +1,6 @@
-﻿using EBP.Application.Commands;
+﻿using EBP.Application.Behaviors;
+using EBP.Application.Commands;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EBP.Application
@@ -9,10 +11,11 @@ namespace EBP.Application
         {
             services.AddScoped(_ => TimeProvider.System);
 
-            services
-                .AddMediatR(cfg => cfg
-                    //.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>)) TODO: add validation pipeline behavior
-                    .RegisterServicesFromAssemblyContaining<CreateBookingEventCommand>());
+            services.AddMediatR(_ => _
+                .AddOpenBehavior(typeof(ValidationPipelineBehavior<,>))
+                .RegisterServicesFromAssemblyContaining<CreateBookingEventCommand>());
+
+            services.AddValidatorsFromAssemblyContaining<CreateBookingEventCommand>();
         }
     }
 }

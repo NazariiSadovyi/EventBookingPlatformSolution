@@ -16,8 +16,8 @@ namespace EBP.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Desciption = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Desciption = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     StartAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Duration = table.Column<TimeSpan>(type: "time", nullable: false)
                 },
@@ -25,6 +25,12 @@ namespace EBP.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_BookingEvents", x => x.Id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookingEvents_Name",
+                table: "BookingEvents",
+                column: "Name",
+                unique: true);
         }
 
         /// <inheritdoc />

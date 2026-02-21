@@ -1,3 +1,4 @@
+using EBP.API.Middlewares;
 using EBP.Application;
 using EBP.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,8 @@ namespace EBP.API
             // ONLY FOR DEMO PURPOSE, DO NOT USE THIS APPROACH IN PRODUCTION ENVIRONMENT !!!
             await ApplyMigration(app);
 
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+            
             // Configure the HTTP request pipeline. 
             if (app.Environment.IsDevelopment())
             {

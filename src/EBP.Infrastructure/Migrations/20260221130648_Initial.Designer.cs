@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EBP.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260221120411_Initial")]
+    [Migration("20260221130648_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -28,25 +28,28 @@ namespace EBP.Infrastructure.Migrations
             modelBuilder.Entity("EBP.Domain.Entities.BookingEvent", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Desciption")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("StartAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("BookingEvents");
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("BookingEvents", (string)null);
                 });
 #pragma warning restore 612, 618
         }

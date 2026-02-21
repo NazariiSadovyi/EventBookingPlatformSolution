@@ -4,7 +4,7 @@ using MediatR;
 namespace EBP.Application.Commands
 {
     public record class CreateBookingEventCommand(
-        string? Title,
+        string? Name,
         string? Description,
         DateTime StartAt,
         TimeSpan Duration)
