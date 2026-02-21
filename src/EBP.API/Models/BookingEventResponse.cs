@@ -8,5 +8,5 @@
         public DateTime StartAt { get; set; }
         public TimeSpan Duration { get; set; }
         public BookingTicketResponse[] Tickets { get; set; } = null!;
-}
+    }
 }
