@@ -11,6 +11,7 @@ namespace EBP.Domain.Entities
         public DateTime? BookedAt { get; private set; }
 
         public BookingEvent BookingEvent { get; private set; }
+        public string? UserId { get; private set; }
 
         private BookingTicket() { }
 
@@ -25,19 +26,21 @@ namespace EBP.Domain.Entities
             };
         }
 
-        public void BookForPurchasing(DateTime currentDateTime)
+        public void BookForPurchasing(DateTime currentDateTime, ApplicationUser applicationUser)
         {
             if (Status != TicketStatus.Available)
                 throw new BookingTicketIsNotAvailableForBookingException(Id);
 
             Status = TicketStatus.Booked;
             BookedAt = currentDateTime;
+            UserId = applicationUser.UserId;
         }
 
         public void ReleaseBooking()
         {
             Status = TicketStatus.Available;
             BookedAt = null;
+            UserId = null;
         }
     }
 }

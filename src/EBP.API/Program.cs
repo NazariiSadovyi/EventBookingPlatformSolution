@@ -1,5 +1,7 @@
 using EBP.API.Middlewares;
+using EBP.API.Providers;
 using EBP.Application;
+using EBP.Domain.Providers;
 using EBP.Infrastructure;
 using EBP.Infrastructure.BackgroundJob;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -55,6 +57,8 @@ namespace EBP.API
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
             builder.Services.AddInfrastructureBackgroundJob(builder.Configuration);
+
+            builder.Services.AddScoped<IApplicationUserProvider, ApplicationUserProvider>();
 
             builder.Services
                 .AddIdentity<IdentityUser, IdentityRole>()

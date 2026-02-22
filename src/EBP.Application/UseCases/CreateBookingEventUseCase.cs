@@ -11,7 +11,8 @@ namespace EBP.Application.UseCases
 {
     internal class CreateBookingEventUseCase(
         ITimeProvider _timeProvider,
-        IBookingEventRepository bookingEventRepository)
+        IBookingEventRepository bookingEventRepository,
+        IApplicationUserProvider applicationUserProvider)
         : IRequestHandler<CreateBookingEventCommand, BookingEvent>
     {
         public async Task<BookingEvent> Handle(CreateBookingEventCommand request, CancellationToken cancellationToken)

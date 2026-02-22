@@ -13,6 +13,7 @@ namespace EBP.Application.UseCases
         IBookingTicketRepository bookingTicketRepository,
         IDbSessionRepository dbSessionRepository,
         ITimeProvider timeProvider,
+        IApplicationUserProvider applicationUserProvider,
         ILogger<BookTicketsUseCase> logger)
         : IRequestHandler<BookTicketsCommand, IEnumerable<BookingTicket>>
     {
@@ -21,7 +22,7 @@ namespace EBP.Application.UseCases
             var tickets = await bookingTicketRepository.GetTicketsAsync(request.BookingTicketIds, cancellationToken);
             
             foreach (var ticket in tickets)
-                ticket.BookForPurchasing(timeProvider.Now);
+                ticket.BookForPurchasing(timeProvider.Now, applicationUserProvider.Current);
 
             try
             {
