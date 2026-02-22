@@ -32,8 +32,8 @@ namespace EBP.API
 
             var app = builder.Build();
 
-            // ONLY FOR DEMO PURPOSE, DO NOT USE THIS APPROACH IN PRODUCTION ENVIRONMENT !!!
-            await ApplyMigration(app);
+            if (builder.Configuration.GetValue<bool>("ApplyMigrationsOnStartup"))
+                await ApplyMigration(app);
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
             
