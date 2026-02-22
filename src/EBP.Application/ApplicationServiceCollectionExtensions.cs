@@ -1,5 +1,6 @@
 ﻿using EBP.Application.Behaviors;
 using EBP.Application.Commands;
+using EBP.Application.UseCases;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +15,8 @@ namespace EBP.Application
                 .RegisterServicesFromAssemblyContaining<CreateBookingEventCommand>());
 
             services.AddValidatorsFromAssemblyContaining<CreateBookingEventCommand>();
+
+            services.AddScoped<ReleaseBookedTicketsUseCase>();
         }
     }
 }

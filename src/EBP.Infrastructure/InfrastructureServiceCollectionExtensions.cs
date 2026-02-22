@@ -1,4 +1,5 @@
 ﻿using EBP.Application.Interfaces;
+using EBP.Application.UseCases;
 using EBP.Domain.Providers;
 using EBP.Domain.Repositories;
 using EBP.Infrastructure.Options;
@@ -20,6 +21,7 @@ namespace EBP.Infrastructure
         {
             AddPersistence(services, configuration);
             AddAuthentication(services, configuration);
+            AddHostedService(services, configuration);
             services.AddScoped<ITimeProvider, Providers.TimeProvider>();
         }
 
@@ -67,6 +69,12 @@ namespace EBP.Infrastructure
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.SecurityKey))
                     };
                 });
+        }
+
+        private static void AddHostedService(IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<ReleaseBookingOptions>(configuration.GetSection(nameof(ReleaseBookingOptions)));
+            services.AddHostedService<EngineBackgroundService<ReleaseBookedTicketsUseCase>>();
         }
     }
 }

@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EBP.Domain", "src\EBP.Domai
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EBP.Infrastructure", "src\EBP.Infrastructure\EBP.Infrastructure.csproj", "{BCD9FE2F-75EC-418A-90A7-E9304FAAD66C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EBP.Infrastructure.BackgroundJob", "src\EBP.Infrastructure.BackgroundJob\EBP.Infrastructure.BackgroundJob.csproj", "{865D76AD-D0EB-48FB-A91A-759DB8110430}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,10 +37,6 @@ Global
 		{BCD9FE2F-75EC-418A-90A7-E9304FAAD66C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCD9FE2F-75EC-418A-90A7-E9304FAAD66C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCD9FE2F-75EC-418A-90A7-E9304FAAD66C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{865D76AD-D0EB-48FB-A91A-759DB8110430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{865D76AD-D0EB-48FB-A91A-759DB8110430}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{865D76AD-D0EB-48FB-A91A-759DB8110430}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{865D76AD-D0EB-48FB-A91A-759DB8110430}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,7 +46,6 @@ Global
 		{BB6234CF-522A-4955-A5DE-FD83CA898898} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{EC67FC68-2AF4-4B47-9E7B-39DAA90FF26B} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{BCD9FE2F-75EC-418A-90A7-E9304FAAD66C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{865D76AD-D0EB-48FB-A91A-759DB8110430} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61AD1F23-231D-485D-8AFB-1E4C801B94B9}
