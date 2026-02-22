@@ -26,8 +26,6 @@ namespace EBP.API
 
             builder.Services.AddScoped<IApplicationUserProvider, ApplicationUserProvider>();
 
-            builder.Services.AddJwtAuthentication(builder.Configuration);
-
             builder.Services.AddAuthorization();
 
             var app = builder.Build();
