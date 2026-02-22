@@ -1,9 +1,10 @@
 ﻿using EBP.Domain.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace EBP.Infrastructure
 {
-    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
+    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext(options)
     {
         public DbSet<BookingEvent> BookingEvents { get; set; }
         public DbSet<BookingTicket> BookingTickets { get; set; }
