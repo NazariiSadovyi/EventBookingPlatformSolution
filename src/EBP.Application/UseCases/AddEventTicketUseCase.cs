@@ -3,7 +3,6 @@ using EBP.Application.Converters;
 using EBP.Domain.Exceptions;
 using EBP.Domain.Repositories;
 using MediatR;
-using System.Linq;
 
 namespace EBP.Application.UseCases
 {
@@ -20,7 +19,7 @@ namespace EBP.Application.UseCases
 
             var newTicket = @event.AddTicket(request.Kind.ToDomain(), request.Price);
 
-            await _dbSessionRepository.SaveChangesAsync<IEventRepository>(_ => Task.CompletedTask, cancellationToken);
+            await _dbSessionRepository.SaveChangesAsync(cancellationToken);
 
             return newTicket.Id;
         }
