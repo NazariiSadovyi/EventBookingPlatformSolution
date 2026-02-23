@@ -48,5 +48,24 @@ namespace EBP.Domain.Entities
         {
             _tickets.AddRange(Enumerable.Range(0, count).Select(_ => Ticket.CreateNew(this, ticketKind, price)));
         }
+
+        public Ticket AddTicket(TicketKind ticketKind, decimal price)
+        {
+            var ticket = Ticket.CreateNew(this, ticketKind, price);
+            _tickets.Add(ticket);
+            return ticket;
+        }
+
+        public void RemoveTicket(Guid ticketId)
+        {
+            var ticket = _tickets.FirstOrDefault(t => t.Id == ticketId);
+            if (ticket is null)
+                throw new TicketNotFoundException(ticketId);
+
+            if (!ticket.IsAvailable)
+                throw new TicketIsInUseException(ticketId);
+
+            _tickets.Remove(ticket);
+        }
     }
 }

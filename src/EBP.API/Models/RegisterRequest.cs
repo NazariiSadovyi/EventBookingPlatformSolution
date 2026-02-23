@@ -8,7 +8,7 @@ namespace EBP.API.Models
         public string Email { get; set; } = null!;
         [DefaultValue("SomePassword123!@#")]
         public string Password { get; set; } = null!;
-        [DefaultValue(false)]
+        [DefaultValue(true)]
         public bool IsAdmin { get; set; }
     }
 }
