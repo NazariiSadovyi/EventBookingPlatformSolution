@@ -2,7 +2,7 @@
 {
     public enum TicketKind
     {
-        Standard = 0,
+        Regular = 0,
         VIP = 1,
         Student = 2
     }

@@ -9,7 +9,7 @@ namespace EBP.Application.Converters
         {
             return ticketKind switch
             {
-                TicketKind.Standard => TicketKindDto.Standard,
+                TicketKind.Regular => TicketKindDto.Regular,
                 TicketKind.VIP => TicketKindDto.VIP,
                 TicketKind.Student => TicketKindDto.Student,
                 _ => throw new ArgumentOutOfRangeException(nameof(ticketKind), $"Not expected ticket kind value: {ticketKind}"),
@@ -20,7 +20,7 @@ namespace EBP.Application.Converters
         {
             return ticketKindDto switch
             {
-                TicketKindDto.Standard => TicketKind.Standard,
+                TicketKindDto.Regular => TicketKind.Regular,
                 TicketKindDto.VIP => TicketKind.VIP,
                 TicketKindDto.Student => TicketKind.Student,
                 _ => throw new ArgumentOutOfRangeException(nameof(ticketKindDto), $"Not expected ticket kind DTO value: {ticketKindDto}"),
@@ -31,7 +31,7 @@ namespace EBP.Application.Converters
         {
             return ticketKindDto switch
             {
-                TicketKindDto.Standard => TicketKind.Standard,
+                TicketKindDto.Regular => TicketKind.Regular,
                 TicketKindDto.VIP => TicketKind.VIP,
                 TicketKindDto.Student => TicketKind.Student,
                 null => null,

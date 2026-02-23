@@ -5,6 +5,7 @@ using EBP.Application;
 using EBP.Domain.Providers;
 using EBP.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace EBP.API
 {
@@ -14,7 +15,11 @@ namespace EBP.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(o =>
+            {
+                o.JsonSerializerOptions.Converters.Add(
+                    new JsonStringEnumConverter());
+            }); ;
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwagger();
