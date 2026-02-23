@@ -14,6 +14,14 @@ namespace EBP.Infrastructure.Repositories
         IOptions<ReleaseBookingOptions> _options)
         : IBookingRepository
     {
+        public async Task<IEnumerable<Booking>> GetUsersBookingAsync(string userId, CancellationToken cancellationToken = default)
+        {
+            return await _applicationDbContext.Bookings
+                .Include(_ => _.Event)
+                .Where(_ => _.UserId == userId)
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task AddAsync(Booking booking, CancellationToken cancellationToken = default)
         {
             await _applicationDbContext.Bookings.AddAsync(booking, cancellationToken);

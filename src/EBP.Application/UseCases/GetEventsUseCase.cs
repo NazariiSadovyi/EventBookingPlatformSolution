@@ -1,5 +1,6 @@
-﻿using EBP.Application.Queries;
-using EBP.Domain.Entities;
+﻿using EBP.Application.Converters;
+using EBP.Application.DTOs;
+using EBP.Application.Queries;
 using EBP.Domain.Repositories;
 using MediatR;
 
@@ -7,11 +8,12 @@ namespace EBP.Application.UseCases
 {
     internal class GetEventsUseCase(
         IEventRepository eventRepository)
-        : IRequestHandler<GetEventsQuery, IEnumerable<Event>>
+        : IRequestHandler<GetEventsQuery, IEnumerable<EventDto>>
     {
-        public Task<IEnumerable<Event>> Handle(GetEventsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<EventDto>> Handle(GetEventsQuery request, CancellationToken cancellationToken)
         {
-            return eventRepository.GetAvailableAsync(request.TicketType, cancellationToken);
+            var events = await eventRepository.GetAvailableAsync(request.TicketType.ToDomain(), cancellationToken);
+            return events.ToDtos();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using EBP.Application.Commands;
+using EBP.Application.Converters;
 using EBP.Domain.Entities;
 using EBP.Domain.Exceptions;
 using EBP.Domain.Providers;
@@ -25,9 +26,10 @@ namespace EBP.Application.UseCases
 
             foreach (var ticketDetail in command.TicketDetails)
             {
-                var tickets = availableTikets.Where(t => t.Type.Kind == ticketDetail.Kind).Take(ticketDetail.TicketCount).ToArray();
+                var ticketKind = ticketDetail.Kind.ToDomain();
+                var tickets = availableTikets.Where(t => t.Type.Kind == ticketKind).Take(ticketDetail.TicketCount).ToArray();
                 if (tickets.Length != ticketDetail.TicketCount)
-                    throw new NotEnoughtTicketForBooking(ticketDetail.Kind);
+                    throw new NotEnoughtTicketForBooking(ticketKind);
 
                 ticketsToBook.AddRange(tickets);
             }

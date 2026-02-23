@@ -2,6 +2,7 @@ using EBP.API.Mappers;
 using EBP.API.Models;
 using EBP.Application.Commands;
 using EBP.Application.Constants;
+using EBP.Application.DTOs;
 using EBP.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EBP.API.Controllers
 {
     [ApiController]
-    [Authorize(Roles = AppRoles.User)]
+    [Authorize(Roles = $"{AppRoles.User},{AppRoles.Admin}")]
     [Route("api/user")]
     public class UserController(ISender _sender) : ControllerBase
     {
@@ -20,11 +21,11 @@ namespace EBP.API.Controllers
         /// <param name="ticketKind">The type of ticket to filter events by. If null, all events will be returned.</param>
         /// <returns>List of events matching the specified ticket type filter.</returns>
         [HttpGet("events")]
-        public async Task<IEnumerable<EventResponse>> Get(TicketKindContract? ticketKind)
+        public async Task<IEnumerable<EventDto>> Get(TicketKindDto? ticketKind)
         {
-            var query = new GetEventsQuery(ticketKind.ToDomain());
+            var query = new GetEventsQuery(ticketKind);
             var result = await _sender.Send(query);
-            return result.ToResponses();
+            return result;
         }
 
         /// <summary>
@@ -38,7 +39,7 @@ namespace EBP.API.Controllers
         {
             var command = new BookEventTicketsCommand(
                 eventId,
-                bookTicketRequest.BookTickets.ToDomains());
+                bookTicketRequest.BookTickets.ToApplications());
             var bookingId = await _sender.Send(command);
             return Ok(new { bookingId });
         }
@@ -87,9 +88,11 @@ namespace EBP.API.Controllers
         /// </summary>
         /// <returns>A collection of user's booking history.</returns>
         [HttpPost("bookings/history")]
-        public async Task<IEnumerable<TicketResponse>> History()
+        public async Task<IEnumerable<BookingHistoryDto>> History()
         {
-            return null;
+            var query = new GetBookingHistoryQuery();
+            var result = await _sender.Send(query);
+            return result;
         }
     }
 }

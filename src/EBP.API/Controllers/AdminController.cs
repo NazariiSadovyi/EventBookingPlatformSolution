@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EBP.API.Controllers
 {
     [ApiController]
-    [Authorize(Roles = AppRoles.User)]
+    [Authorize(Roles = AppRoles.Admin)]
     [Route("api/admin")]
     public class AdminController(ISender _sender) : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace EBP.API.Controllers
                 createEventRequest.Description,
                 createEventRequest.StartAt,
                 createEventRequest.Duration,
-                createEventRequest.TicketDetails.ToDomains());
+                createEventRequest.TicketDetails.ToApplications());
             var eventId = await _sender.Send(command);
             return Ok(new { eventId });
         }

@@ -1,4 +1,4 @@
-﻿using EBP.Domain.Enums;
+﻿using EBP.Application.DTOs;
 using MediatR;
 
 namespace EBP.Application.Commands
@@ -11,6 +11,6 @@ namespace EBP.Application.Commands
     }
 
     public record class BookEventTicketsDetail(
-        TicketKind Kind,
+        TicketKindDto Kind,
         int TicketCount);
 }

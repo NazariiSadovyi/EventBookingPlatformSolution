@@ -8,6 +8,7 @@ namespace EBP.API.Extensions
         {
             services.AddSwaggerGen(_ =>
             {
+                _.UseInlineDefinitionsForEnums();
                 _.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "Booking Event Platform",

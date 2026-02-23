@@ -7,7 +7,6 @@ namespace EBP.API.Mappers
     [Mapper]
     public static partial class CreateEventTicketDetailMapper
     {
-        public static partial CreateEventTicketDetail ToDomain(this CreateEventTicketDetailRequest _);
-        public static partial IEnumerable<CreateEventTicketDetail> ToDomains(this IEnumerable<CreateEventTicketDetailRequest> _);
+        public static partial IEnumerable<CreateEventTicketDetail> ToApplications(this IEnumerable<CreateEventTicketDetailRequest> _);
     }
 }
