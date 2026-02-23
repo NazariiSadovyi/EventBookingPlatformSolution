@@ -5,6 +5,7 @@ using EBP.Application.Constants;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using EBP.Application.Queries;
 
 namespace EBP.API.Controllers
 {
@@ -43,6 +44,14 @@ namespace EBP.API.Controllers
             var command = new RemoveEventTicketCommand(eventId, ticketId);
             await _sender.Send(command);
             return Ok();
+        }
+
+        [HttpGet("booking/statistics")]
+        public async Task<IActionResult> Statistics()
+        {
+            var query = new GetBookingStatisticsQuery();
+            var result = await _sender.Send(query);
+            return Ok(result);
         }
     }
 }

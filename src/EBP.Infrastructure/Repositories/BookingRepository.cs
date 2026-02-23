@@ -1,5 +1,6 @@
 ﻿using EBP.Domain.Entities;
 using EBP.Domain.Enums;
+using EBP.Domain.Models;
 using EBP.Domain.Providers;
 using EBP.Domain.Repositories;
 using EBP.Infrastructure.Options;
@@ -47,6 +48,37 @@ namespace EBP.Infrastructure.Repositories
                 .Include(_ => _.Tickets)
                 .Where(_ => _.Status == BookingStatus.Booked && _timeProvider.Now.Add(-allowedBookedPeriod) > _.CreatedAt)
                 .ToListAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<BookingStatistics>> GetStatisticsAsync(CancellationToken cancellationToken = default)
+        {
+            var grouped = await _applicationDbContext.Bookings
+                .Include(b => b.Event)
+                .GroupBy(b => new { b.Event.Id, b.Event.Name })
+                .Select(g => new
+                {
+                    EventId = g.Key.Id,
+                    EventName = g.Key.Name,
+                    Total = g.Count(),
+                    Booked = g.Count(b => b.Status == BookingStatus.Booked),
+                    Submitted = g.Count(b => b.Status == BookingStatus.Submitted),
+                    Cancelled = g.Count(b => b.Status == BookingStatus.Cancelled),
+                    Released = g.Count(b => b.Status == BookingStatus.Released),
+                    Expired = g.Count(b => b.Status == BookingStatus.Expired),
+                    Used = g.Count(b => b.Status == BookingStatus.Used)
+                })
+                .ToListAsync(cancellationToken);
+
+            return grouped.Select(g => new BookingStatistics(
+                g.EventId,
+                g.EventName,
+                g.Total,
+                g.Booked,
+                g.Submitted,
+                g.Cancelled,
+                g.Released,
+                g.Expired,
+                g.Used)).ToArray();
         }
     }
 }

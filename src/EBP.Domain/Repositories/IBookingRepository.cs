@@ -1,4 +1,5 @@
 ﻿using EBP.Domain.Entities;
+using EBP.Domain.Models;
 
 namespace EBP.Domain.Repositories
 {
@@ -9,5 +10,6 @@ namespace EBP.Domain.Repositories
         Task AddAsync(Booking booking, CancellationToken cancellationToken = default);
         void Remove(Booking booking);
         Task<IEnumerable<Booking>> GetExpiredBookingsAsync(CancellationToken cancellationToken = default);
+        Task<IEnumerable<BookingStatistics>> GetStatisticsAsync(CancellationToken cancellationToken = default);
     }
 }
