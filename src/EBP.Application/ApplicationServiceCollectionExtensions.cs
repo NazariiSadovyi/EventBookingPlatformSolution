@@ -12,11 +12,11 @@ namespace EBP.Application
         {
             services.AddMediatR(_ => _
                 .AddOpenBehavior(typeof(ValidationPipelineBehavior<,>))
-                .RegisterServicesFromAssemblyContaining<CreateBookingEventCommand>());
+                .RegisterServicesFromAssemblyContaining<CreateEventCommand>());
 
-            services.AddValidatorsFromAssemblyContaining<CreateBookingEventCommand>();
+            services.AddValidatorsFromAssemblyContaining<CreateEventCommand>();
 
-            services.AddScoped<ReleaseBookedTicketsUseCase>();
+            services.AddScoped<ReleaseExpiredBookingUseCase>();
         }
     }
 }

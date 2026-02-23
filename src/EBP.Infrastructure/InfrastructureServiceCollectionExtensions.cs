@@ -32,8 +32,9 @@ namespace EBP.Infrastructure
                 .AddDbContext<ApplicationDbContext>(_ => _.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IDbSessionRepository, DbSessionRepository>();
-            services.AddScoped<IBookingEventRepository, BookingEventRepository>();
-            services.AddScoped<IBookingTicketRepository, BookingTicketRepository>();
+            services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<ITicketRepository, TicketRepository>();
+            services.AddScoped<IBookingRepository, BookingRepository>();
         }
 
         private static void AddAuthentication(IServiceCollection services, IConfiguration configuration)
@@ -76,7 +77,7 @@ namespace EBP.Infrastructure
         private static void AddHostedService(IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<ReleaseBookingOptions>(configuration.GetSection(nameof(ReleaseBookingOptions)));
-            services.AddHostedService<EngineBackgroundService<ReleaseBookedTicketsUseCase>>();
+            services.AddHostedService<EngineBackgroundService<ReleaseExpiredBookingUseCase>>();
         }
     }
 }

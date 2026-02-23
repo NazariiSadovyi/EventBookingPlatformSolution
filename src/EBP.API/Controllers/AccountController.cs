@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EBP.API.Controllers
 {
     [ApiController]
-    [Route("account")]
+    [Route("api/account")]
     public class AccountController(ISender _sender) : ControllerBase
     {
         [HttpPost("register")]

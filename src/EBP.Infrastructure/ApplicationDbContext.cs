@@ -6,8 +6,9 @@ namespace EBP.Infrastructure
 {
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext(options)
     {
-        public DbSet<BookingEvent> BookingEvents { get; set; }
-        public DbSet<BookingTicket> BookingTickets { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

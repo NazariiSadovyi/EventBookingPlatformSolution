@@ -1,5 +1,6 @@
 ﻿using EBP.Application.Commands;
 using EBP.Domain.Entities;
+using EBP.Domain.Enums;
 using EBP.Domain.Exceptions;
 using EBP.Domain.Providers;
 using EBP.Domain.Repositories;
@@ -7,27 +8,42 @@ using MediatR;
 
 namespace EBP.Application.UseCases
 {
-    internal class BookTicketsUseCase(
-        IDbSessionRepository dbSessionRepository,
-        ITimeProvider timeProvider,
-        IApplicationUserProvider applicationUserProvider)
-        : IRequestHandler<BookTicketsCommand, IEnumerable<BookingTicket>>
+    internal class BookEventTicketsUseCase(
+        IDbSessionRepository _dbSessionRepository,
+        ITimeProvider _timeProvider,
+        IApplicationUserProvider _applicationUserProvider,
+        IEventRepository _eventRepository)
+        : IRequestHandler<BookEventTicketsCommand, Guid>
     {
-        public async Task<IEnumerable<BookingTicket>> Handle(BookTicketsCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(BookEventTicketsCommand command, CancellationToken cancellationToken)
         {
-            IEnumerable<BookingTicket>? tickets = null;
+            var @event = await _eventRepository.GetAsync(command.EventId, cancellationToken);
+            if (@event is null)
+                throw new EventNotFoundException(command.EventId);
 
-            var result = await dbSessionRepository.SaveChangesAsync<IBookingTicketRepository>(async bookingTicketRepository =>
+            var availableTikets = @event.Tickets.Where(t => t.IsAvailable).ToArray();
+            var standartTickets = availableTikets.Where(t => t.Type == TicketType.Standard).Take(command.StandartTicketCount).ToArray();
+            var vipTickets = availableTikets.Where(t => t.Type == TicketType.VIP).Take(command.VipTicketCount).ToArray();
+            var studentTickets = availableTikets.Where(t => t.Type == TicketType.Student).Take(command.StudentTicketCount).ToArray();
+
+            if (standartTickets.Length != command.StandartTicketCount
+                || vipTickets.Length != command.VipTicketCount
+                || studentTickets.Length != command.StudentTicketCount)
+                throw new NotEnoughtTicketForBooking();
+
+            Booking booking = null!;
+
+            var result = await _dbSessionRepository.SaveChangesAsync<IBookingRepository>(async bookingRepository =>
             {
-                tickets = await bookingTicketRepository.GetTicketsAsync(request.BookingTicketIds, cancellationToken);
-                foreach (var ticket in tickets)
-                    ticket.BookForPurchasing(timeProvider.Now, applicationUserProvider.Current);
+                var tickets = standartTickets.Concat(vipTickets).Concat(studentTickets);
+                booking = Booking.CreateNew(@event, tickets, _applicationUserProvider.Current.UserId, _timeProvider.Now);
+                await bookingRepository.AddAsync(booking, cancellationToken);
             }, cancellationToken);
 
             if (!result)
-                throw new BookingTicketsBookingConcurrencyException(request.BookingTicketIds);
+                throw new TicketsBookingConcurrencyException();
 
-            return tickets!;
+            return booking.Id;
         }
     }
 }
