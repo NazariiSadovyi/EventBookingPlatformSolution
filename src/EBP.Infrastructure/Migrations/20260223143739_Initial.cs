@@ -193,6 +193,27 @@ namespace EBP.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BookingRefunds",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    BookingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsRefunded = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookingRefunds", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BookingRefunds_Bookings_BookingId",
+                        column: x => x.BookingId,
+                        principalTable: "Bookings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tickets",
                 columns: table => new
                 {
@@ -260,6 +281,12 @@ namespace EBP.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BookingRefunds_BookingId",
+                table: "BookingRefunds",
+                column: "BookingId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Bookings_EventId",
                 table: "Bookings",
                 column: "EventId");
@@ -298,6 +325,9 @@ namespace EBP.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "BookingRefunds");
 
             migrationBuilder.DropTable(
                 name: "Tickets");

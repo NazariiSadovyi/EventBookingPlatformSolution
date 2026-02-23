@@ -1,17 +1,11 @@
 ﻿using EBP.Domain.Entities;
-using EBP.Domain.Enums;
-using EBP.Domain.Providers;
 using EBP.Domain.Repositories;
-using EBP.Infrastructure.Options;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace EBP.Infrastructure.Repositories
 {
     internal class TicketRepository(
-        ApplicationDbContext applicationDbContext,
-        ITimeProvider timeProvider,
-        IOptions<ReleaseBookingOptions> options)
+        ApplicationDbContext applicationDbContext)
         : ITicketRepository
     {
         public async Task<IEnumerable<Ticket>> GetTicketsAsync(Guid[] ticketIds, CancellationToken cancellationToken = default)

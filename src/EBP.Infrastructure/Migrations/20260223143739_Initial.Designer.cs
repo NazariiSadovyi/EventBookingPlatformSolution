@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EBP.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260223134808_Initial")]
+    [Migration("20260223143739_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -50,6 +50,33 @@ namespace EBP.Infrastructure.Migrations
                     b.HasIndex("EventId");
 
                     b.ToTable("Bookings", (string)null);
+                });
+
+            modelBuilder.Entity("EBP.Domain.Entities.BookingRefund", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("BookingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsRefunded")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookingId")
+                        .IsUnique();
+
+                    b.ToTable("BookingRefunds", (string)null);
                 });
 
             modelBuilder.Entity("EBP.Domain.Entities.Event", b =>
@@ -313,6 +340,17 @@ namespace EBP.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("EBP.Domain.Entities.BookingRefund", b =>
+                {
+                    b.HasOne("EBP.Domain.Entities.Booking", "Booking")
+                        .WithOne()
+                        .HasForeignKey("EBP.Domain.Entities.BookingRefund", "BookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Booking");
                 });
 
             modelBuilder.Entity("EBP.Domain.Entities.Ticket", b =>

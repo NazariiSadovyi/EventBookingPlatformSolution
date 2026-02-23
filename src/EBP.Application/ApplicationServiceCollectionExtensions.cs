@@ -17,6 +17,7 @@ namespace EBP.Application
             services.AddValidatorsFromAssemblyContaining<CreateEventCommand>();
 
             services.AddScoped<ReleaseExpiredBookingUseCase>();
+            services.AddScoped<RefundBookingUseCase>();
         }
     }
 }

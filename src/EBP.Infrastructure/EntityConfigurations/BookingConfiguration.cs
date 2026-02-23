@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EBP.Infrastructure.EntityConfigurations
 {
-    public sealed class BookingConfiguration : IEntityTypeConfiguration<Booking>
+    public class BookingConfiguration : IEntityTypeConfiguration<Booking>
     {
         public void Configure(EntityTypeBuilder<Booking> builder)
         {

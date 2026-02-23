@@ -35,6 +35,7 @@ namespace EBP.Infrastructure
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<IBookingRepository, BookingRepository>();
+            services.AddScoped<IBookingRefundRepository, BookingRefundRepository>();
         }
 
         private static void AddAuthentication(IServiceCollection services, IConfiguration configuration)
@@ -78,6 +79,7 @@ namespace EBP.Infrastructure
         {
             services.Configure<ReleaseBookingOptions>(configuration.GetSection(nameof(ReleaseBookingOptions)));
             services.AddHostedService<EngineBackgroundService<ReleaseExpiredBookingUseCase>>();
+            services.AddHostedService<EngineBackgroundService<RefundBookingUseCase>>();
         }
     }
 }

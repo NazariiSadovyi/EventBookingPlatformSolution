@@ -9,6 +9,7 @@ namespace EBP.Infrastructure
         public DbSet<Event> Events { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Booking> Bookings { get; set; }
+        public DbSet<BookingRefund> BookingRefunds { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
