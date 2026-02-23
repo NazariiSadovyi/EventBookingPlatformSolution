@@ -1,6 +1,7 @@
 using EBP.API.Mappers;
 using EBP.API.Models;
 using EBP.Application.Commands;
+using EBP.Application.Constants;
 using EBP.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EBP.API.Controllers
 {
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = AppRoles.Admin)]
     [Route("bookingEvents")]
     public class BookingEventController(ISender mediator) : ControllerBase
     {

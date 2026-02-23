@@ -11,7 +11,7 @@ namespace EBP.Application.UseCases
     {
         public async Task<string> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
-            var (found, userId, storedEmail) = await _identityService.FindByEmailAsync(request.Email);
+            var (found, userId, storedEmail, roles) = await _identityService.FindByEmailAsync(request.Email);
             if (!found || userId is null || storedEmail is null)
                 throw new LoginFailedException("Invalid credentials");
 
@@ -19,7 +19,7 @@ namespace EBP.Application.UseCases
             if (!valid)
                 throw new LoginFailedException("Invalid credentials");
 
-            var token = _tokenService.CreateJwt(userId, storedEmail);
+            var token = _tokenService.CreateJwt(userId, storedEmail, roles);
             return token;
         }
     }

@@ -10,14 +10,16 @@ namespace EBP.Infrastructure.Services
 {
     public  class JwtTokenService(IOptions<JwtOptions> _options) : ITokenService
     {
-        public string CreateJwt(string userId, string email)
+        public string CreateJwt(string userId, string email, IList<string> roles)
         {
-            var claims = new[]
+            var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, userId),
                 new Claim(JwtRegisteredClaimNames.Email, email),
                 new Claim(ClaimTypes.NameIdentifier, userId),
             };
+
+            claims.AddRange(roles.Select(_ => new Claim(ClaimTypes.Role, _)));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Value.SecurityKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

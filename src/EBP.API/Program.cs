@@ -31,6 +31,8 @@ namespace EBP.API
             if (builder.Configuration.GetValue<bool>("ApplyMigrationsOnStartup"))
                 await ApplyMigration(app);
 
+            await IdentityCreator.CreateRolesAsync(app.Services);
+
             app.UseMiddleware<ErrorHandlingMiddleware>();
             
             if (app.Environment.IsDevelopment())

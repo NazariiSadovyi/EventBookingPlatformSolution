@@ -12,7 +12,7 @@ namespace EBP.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Create(RegisterRequest registerRequest)
         {
-            var command = new RegisterUserCommand(registerRequest.Email, registerRequest.Password);
+            var command = new RegisterUserCommand(registerRequest.Email, registerRequest.Password, registerRequest.IsAdmin);
             await _sender.Send(command);
             return Ok();
         }

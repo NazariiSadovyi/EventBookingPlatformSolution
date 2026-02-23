@@ -9,7 +9,7 @@ namespace EBP.Application.UseCases
     {
         public async Task Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            var (succeeded, errors) = await _identityService.CreateUserAsync(request.Email, request.Password);
+            var (succeeded, errors) = await _identityService.CreateUserAsync(request.Email, request.Password, request.IsAdmin);
             if (!succeeded)
             {
                 var errorMessage = string.Join(", ", errors);
