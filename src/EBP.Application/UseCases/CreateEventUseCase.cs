@@ -8,7 +8,7 @@ using MediatR;
 
 namespace EBP.Application.UseCases
 {
-    internal class CreateEventUseCase(
+    public class CreateEventUseCase(
         ITimeProvider _timeProvider,
         IEventRepository _eventRepository)
         : IRequestHandler<CreateEventCommand, Guid>

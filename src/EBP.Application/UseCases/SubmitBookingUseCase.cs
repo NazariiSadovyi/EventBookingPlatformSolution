@@ -5,7 +5,7 @@ using MediatR;
 
 namespace EBP.Application.UseCases
 {
-    internal class SubmitBookingUseCase(
+    public class SubmitBookingUseCase(
         IDbSessionRepository _dbSessionRepository,
         IBookingRepository _bookingRepository)
         : IRequestHandler<SubmitBookingCommand>

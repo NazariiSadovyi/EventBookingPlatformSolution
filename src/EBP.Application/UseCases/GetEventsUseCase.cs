@@ -6,7 +6,7 @@ using MediatR;
 
 namespace EBP.Application.UseCases
 {
-    internal class GetEventsUseCase(
+    public class GetEventsUseCase(
         IEventRepository eventRepository)
         : IRequestHandler<GetEventsQuery, IEnumerable<EventDto>>
     {

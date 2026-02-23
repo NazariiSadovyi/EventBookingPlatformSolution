@@ -6,7 +6,7 @@ using MediatR;
 
 namespace EBP.Application.UseCases
 {
-    internal class AddEventTicketUseCase(
+    public class AddEventTicketUseCase(
         IDbSessionRepository _dbSessionRepository,
         IEventRepository _eventRepository)
         : IRequestHandler<AddEventTicketCommand, Guid>

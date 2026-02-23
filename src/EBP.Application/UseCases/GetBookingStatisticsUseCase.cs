@@ -5,7 +5,7 @@ using MediatR;
 
 namespace EBP.Application.UseCases
 {
-    internal class GetBookingStatisticsUseCase(
+    public class GetBookingStatisticsUseCase(
         IBookingRepository _bookingRepository)
         : IRequestHandler<GetBookingStatisticsQuery, IEnumerable<BookingStatisticsDto>>
     {

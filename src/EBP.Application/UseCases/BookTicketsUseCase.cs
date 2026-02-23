@@ -8,7 +8,7 @@ using MediatR;
 
 namespace EBP.Application.UseCases
 {
-    internal class BookEventTicketsUseCase(
+    public class BookEventTicketsUseCase(
         IDbSessionRepository _dbSessionRepository,
         ITimeProvider _timeProvider,
         IApplicationUserProvider _applicationUserProvider,

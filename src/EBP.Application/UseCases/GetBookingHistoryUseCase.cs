@@ -7,7 +7,7 @@ using MediatR;
 
 namespace EBP.Application.UseCases
 {
-    internal class GetBookingHistoryUseCase(
+    public class GetBookingHistoryUseCase(
         IBookingRepository _bookingRepository,
         IApplicationUserProvider _applicationUserProvider)
         : IRequestHandler<GetBookingHistoryQuery, IEnumerable<BookingHistoryDto>>

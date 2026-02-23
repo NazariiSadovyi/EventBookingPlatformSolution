@@ -7,7 +7,7 @@ using MediatR;
 
 namespace EBP.Application.UseCases
 {
-    internal class CancelBookingUseCase(
+    public class CancelBookingUseCase(
         IDbSessionRepository _dbSessionRepository,
         IBookingRepository _bookingRepository,
         IBookingRefundRepository _bookingRefundRepository,

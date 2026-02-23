@@ -5,7 +5,7 @@ using MediatR;
 
 namespace EBP.Application.UseCases
 {
-    internal class RemoveEventTicketUseCase(
+    public class RemoveEventTicketUseCase(
         IDbSessionRepository _dbSessionRepository,
         IEventRepository _eventRepository)
         : IRequestHandler<RemoveEventTicketCommand>
