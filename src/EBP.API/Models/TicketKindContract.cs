@@ -1,6 +1,6 @@
 ﻿namespace EBP.API.Models
 {
-    public enum TicketTypeContract
+    public enum TicketKindContract
     {
         Standard = 0,
         VIP = 1,

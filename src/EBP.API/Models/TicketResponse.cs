@@ -3,6 +3,6 @@
     public class TicketResponse
     {
         public Guid Id { get; set; }
-        public TicketTypeContract Type { get; set; }
+        public TicketKindContract Type { get; set; }
     }
 }

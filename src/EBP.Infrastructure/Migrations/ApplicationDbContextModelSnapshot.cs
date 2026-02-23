@@ -89,10 +89,6 @@ namespace EBP.Infrastructure.Migrations
                     b.Property<Guid>("EventId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<byte[]>("Version")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
@@ -329,9 +325,31 @@ namespace EBP.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.OwnsOne("EBP.Domain.ValueObjects.TicketType", "Type", b1 =>
+                        {
+                            b1.Property<Guid>("TicketId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("Kind")
+                                .HasColumnType("int");
+
+                            b1.Property<decimal>("Price")
+                                .HasColumnType("decimal(18,2)");
+
+                            b1.HasKey("TicketId");
+
+                            b1.ToTable("Tickets");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TicketId");
+                        });
+
                     b.Navigation("Booking");
 
                     b.Navigation("Event");
+
+                    b.Navigation("Type")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

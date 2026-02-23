@@ -1,4 +1,4 @@
-﻿namespace EBP.Domain.ValueObjects
+﻿namespace EBP.Domain.Enums
 {
     public enum EventCreationResult
     {

@@ -1,6 +1,5 @@
 ﻿using EBP.Application.Commands;
 using EBP.Domain.Entities;
-using EBP.Domain.Enums;
 using EBP.Domain.Exceptions;
 using EBP.Domain.Providers;
 using EBP.Domain.Repositories;
@@ -22,21 +21,22 @@ namespace EBP.Application.UseCases
                 throw new EventNotFoundException(command.EventId);
 
             var availableTikets = @event.Tickets.Where(t => t.IsAvailable).ToArray();
-            var standartTickets = availableTikets.Where(t => t.Type == TicketType.Standard).Take(command.StandartTicketCount).ToArray();
-            var vipTickets = availableTikets.Where(t => t.Type == TicketType.VIP).Take(command.VipTicketCount).ToArray();
-            var studentTickets = availableTikets.Where(t => t.Type == TicketType.Student).Take(command.StudentTicketCount).ToArray();
+            var ticketsToBook = new List<Ticket>();
 
-            if (standartTickets.Length != command.StandartTicketCount
-                || vipTickets.Length != command.VipTicketCount
-                || studentTickets.Length != command.StudentTicketCount)
-                throw new NotEnoughtTicketForBooking();
+            foreach (var ticketDetail in command.TicketDetails)
+            {
+                var tickets = availableTikets.Where(t => t.Type.Kind == ticketDetail.Kind).Take(ticketDetail.TicketCount).ToArray();
+                if (tickets.Length != ticketDetail.TicketCount)
+                    throw new NotEnoughtTicketForBooking(ticketDetail.Kind);
+
+                ticketsToBook.AddRange(tickets);
+            }
 
             Booking booking = null!;
 
             var result = await _dbSessionRepository.SaveChangesAsync<IBookingRepository>(async bookingRepository =>
             {
-                var tickets = standartTickets.Concat(vipTickets).Concat(studentTickets);
-                booking = Booking.CreateNew(@event, tickets, _applicationUserProvider.Current.UserId, _timeProvider.Now);
+                booking = Booking.CreateNew(@event, ticketsToBook, _applicationUserProvider.Current.UserId, _timeProvider.Now);
                 await bookingRepository.AddAsync(booking, cancellationToken);
             }, cancellationToken);
 

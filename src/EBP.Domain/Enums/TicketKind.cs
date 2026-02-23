@@ -1,6 +1,6 @@
 ﻿namespace EBP.Domain.Enums
 {
-    public enum TicketType
+    public enum TicketKind
     {
         Standard = 0,
         VIP = 1,

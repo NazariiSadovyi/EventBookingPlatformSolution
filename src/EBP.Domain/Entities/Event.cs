@@ -23,9 +23,7 @@ namespace EBP.Domain.Entities
             string? description,
             DateTime startAt,
             TimeSpan duration,
-            int standartTicketsCount,
-            int vipTicketsCount,
-            int studentTicketsCount,
+            (TicketKind kind, decimal price, int count)[] ticketDetails,
             DateTime now)
         {
             if (startAt < now)
@@ -40,16 +38,15 @@ namespace EBP.Domain.Entities
                 Duration = duration,
             };
 
-            @event.AddTickets(TicketType.Standard, standartTicketsCount);
-            @event.AddTickets(TicketType.VIP, vipTicketsCount);
-            @event.AddTickets(TicketType.Student, studentTicketsCount);
+            foreach (var ticketDetail in ticketDetails)
+                @event.AddTickets(ticketDetail.kind, ticketDetail.price, ticketDetail.count);
 
             return @event;
         }
 
-        public void AddTickets(TicketType ticketType, int count)
+        public void AddTickets(TicketKind ticketKind, decimal price, int count)
         {
-            _tickets.AddRange(Enumerable.Range(0, count).Select(_ => Ticket.CreateNew(this, ticketType)));
+            _tickets.AddRange(Enumerable.Range(0, count).Select(_ => Ticket.CreateNew(this, ticketKind, price)));
         }
     }
 }

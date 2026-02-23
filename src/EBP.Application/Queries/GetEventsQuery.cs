@@ -5,7 +5,7 @@ using MediatR;
 namespace EBP.Application.Queries
 {
     public record class GetEventsQuery(
-        TicketType? TicketType)
+        TicketKind? TicketType)
         : IRequest<IEnumerable<Event>>
     {
     }

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using EBP.Domain.Enums;
+using MediatR;
 
 namespace EBP.Application.Commands
 {
@@ -7,10 +8,15 @@ namespace EBP.Application.Commands
         string? Description,
         DateTime StartAt,
         TimeSpan Duration,
-        int StandartTicketsCount,
-        int VipTicketsCount,
-        int StudentTicketsCount)
+        IEnumerable<CreateEventTicketDetail> TicketDetails)
         : IRequest<Guid>
+    {
+    }
+
+    public record CreateEventTicketDetail(
+         TicketKind Kind,
+         decimal Price,
+         int Count)
     {
     }
 }

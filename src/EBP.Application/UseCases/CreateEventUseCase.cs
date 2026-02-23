@@ -1,9 +1,9 @@
 ﻿using EBP.Application.Commands;
 using EBP.Domain.Entities;
+using EBP.Domain.Enums;
 using EBP.Domain.Exceptions;
 using EBP.Domain.Providers;
 using EBP.Domain.Repositories;
-using EBP.Domain.ValueObjects;
 using MediatR;
 
 namespace EBP.Application.UseCases
@@ -20,9 +20,7 @@ namespace EBP.Application.UseCases
                 request.Description,
                 request.StartAt,
                 request.Duration,
-                request.StandartTicketsCount,
-                request.VipTicketsCount,
-                request.StudentTicketsCount,
+                request.TicketDetails.Select(_ => new ValueTuple<TicketKind, decimal, int>(_.Kind, _.Price, _.Count)).ToArray(),
                 _timeProvider.Now);
 
             var result = await _eventRepository.AddAsync(newEvent, cancellationToken);

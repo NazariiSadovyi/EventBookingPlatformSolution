@@ -12,11 +12,6 @@ namespace EBP.API.Models
         public DateTime StartAt { get; set; }
         [DefaultValue("02:00:00")]
         public TimeSpan Duration { get; set; }
-        [DefaultValue(10)]
-        public int StandardTicketsCount { get; set; }
-        [DefaultValue(2)]
-        public int VipTicketsCount { get; set; }
-        [DefaultValue(5)]
-        public int StudentTicketsCount { get; set; }
+        public CreateEventTicketDetailRequest[] TicketDetails { get; set; } = [];
     }
 }

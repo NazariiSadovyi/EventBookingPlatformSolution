@@ -197,9 +197,10 @@ namespace EBP.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BookedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Type_Kind = table.Column<int>(type: "int", nullable: false),
+                    Type_Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     BookingId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Version = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },

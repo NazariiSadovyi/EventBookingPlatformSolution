@@ -15,14 +15,14 @@ namespace EBP.API.Controllers
     public class UserController(ISender _sender) : ControllerBase
     {
         /// <summary>
-        /// Get events with optional filtering by ticket type. If ticketType is provided, only events that have tickets of the specified type will be returned. If ticketType is null, all events will be returned.
+        /// Get events with optional filtering by ticket kind. If ticketKind is provided, only events that have tickets of the specified type will be returned. If ticketType is null, all events will be returned.
         /// </summary>
-        /// <param name="ticketType">The type of ticket to filter events by. If null, all events will be returned.</param>
+        /// <param name="ticketKind">The type of ticket to filter events by. If null, all events will be returned.</param>
         /// <returns>List of events matching the specified ticket type filter.</returns>
         [HttpGet("events")]
-        public async Task<IEnumerable<EventResponse>> Get(TicketTypeContract? ticketType)
+        public async Task<IEnumerable<EventResponse>> Get(TicketKindContract? ticketKind)
         {
-            var query = new GetEventsQuery(ticketType.ToDomain());
+            var query = new GetEventsQuery(ticketKind.ToDomain());
             var result = await _sender.Send(query);
             return result.ToResponses();
         }
@@ -38,9 +38,7 @@ namespace EBP.API.Controllers
         {
             var command = new BookEventTicketsCommand(
                 eventId,
-                bookTicketRequest.ReqularCount,
-                bookTicketRequest.VipCount,
-                bookTicketRequest.StudentCount);
+                bookTicketRequest.BookTickets.ToDomains());
             var bookingId = await _sender.Send(command);
             return Ok(new { bookingId });
         }

@@ -2,7 +2,6 @@
 using EBP.Domain.Enums;
 using EBP.Domain.Providers;
 using EBP.Domain.Repositories;
-using EBP.Domain.ValueObjects;
 using EBP.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,12 +12,12 @@ namespace EBP.Infrastructure.Repositories
         ITimeProvider timeProvider)
         : IEventRepository
     {
-        public async Task<IEnumerable<Event>> GetAvailableAsync(TicketType? ticketType = null, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Event>> GetAvailableAsync(TicketKind? ticketKind = null, CancellationToken cancellationToken = default)
         {
             IQueryable<Event> query = applicationDbContext.Events;
 
-            if (ticketType is not null)
-                query = query.Where(_ => _.Tickets.Any(__ => __.Type == ticketType));
+            if (ticketKind is not null)
+                query = query.Where(_ => _.Tickets.Any(__ => __.Type.Kind == ticketKind));
 
             return await query
                 .Where(_ => _.StartAt > timeProvider.Now)

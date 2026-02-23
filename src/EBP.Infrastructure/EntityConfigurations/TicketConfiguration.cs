@@ -15,11 +15,9 @@ namespace EBP.Infrastructure.EntityConfigurations
             builder.Property(x => x.Id)
                    .ValueGeneratedNever();
 
-            builder.Property(x => x.Type)
-                   .IsRequired()
-                   .HasConversion<string>();
-
             builder.Property(x => x.BookedAt);
+
+            builder.OwnsOne(_ => _.Type);
 
             builder.Property<Guid>("EventId");
 

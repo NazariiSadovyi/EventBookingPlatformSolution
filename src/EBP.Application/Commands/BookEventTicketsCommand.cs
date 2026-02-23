@@ -1,13 +1,16 @@
-﻿using MediatR;
+﻿using EBP.Domain.Enums;
+using MediatR;
 
 namespace EBP.Application.Commands
 {
     public record class BookEventTicketsCommand(
         Guid EventId,
-        int StandartTicketCount,
-        int VipTicketCount,
-        int StudentTicketCount)
+        IEnumerable<BookEventTicketsDetail> TicketDetails)
         : IRequest<Guid>
     {
     }
+
+    public record class BookEventTicketsDetail(
+        TicketKind Kind,
+        int TicketCount);
 }

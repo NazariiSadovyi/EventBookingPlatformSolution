@@ -13,12 +13,10 @@ namespace EBP.Application.Validators
                 .NotEmpty();
             RuleFor(x => x.Duration)
                 .NotEmpty();
-            RuleFor(x => x.StandartTicketsCount)
-                .GreaterThanOrEqualTo(0);
-            RuleFor(x => x.VipTicketsCount)
-                .GreaterThanOrEqualTo(0);
-            RuleFor(x => x.StudentTicketsCount)
-                .GreaterThanOrEqualTo(0);
+            RuleFor(x => x.TicketDetails)
+                .NotEmpty()
+                .Must(x => x.All(td => td.Count > 0))
+                .WithMessage("Each ticket detail must have a count greater than 0.");
         }
     }
 }

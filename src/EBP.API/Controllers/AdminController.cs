@@ -1,3 +1,4 @@
+using EBP.API.Mappers;
 using EBP.API.Models;
 using EBP.Application.Commands;
 using EBP.Application.Constants;
@@ -20,9 +21,7 @@ namespace EBP.API.Controllers
                 createEventRequest.Description,
                 createEventRequest.StartAt,
                 createEventRequest.Duration,
-                createEventRequest.StandardTicketsCount,
-                createEventRequest.VipTicketsCount,
-                createEventRequest.StudentTicketsCount);
+                createEventRequest.TicketDetails.ToDomains());
             var eventId = await _sender.Send(command);
             return Ok(new { eventId });
         }
