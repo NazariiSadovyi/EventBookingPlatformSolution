@@ -12,10 +12,13 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["EBP.API/EBP.API.csproj", "EBP.API/"]
-RUN dotnet restore "./EBP.API/EBP.API.csproj"
+COPY ["src/EBP.API/EBP.API.csproj", "src/EBP.API/"]
+COPY ["src/EBP.Application/EBP.Application.csproj", "src/EBP.Application/"]
+COPY ["src/EBP.Domain/EBP.Domain.csproj", "src/EBP.Domain/"]
+COPY ["src/EBP.Infrastructure/EBP.Infrastructure.csproj", "src/EBP.Infrastructure/"]
+RUN dotnet restore "./src/EBP.API/EBP.API.csproj"
 COPY . .
-WORKDIR "/src/EBP.API"
+WORKDIR "/src/src/EBP.API"
 RUN dotnet build "./EBP.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
