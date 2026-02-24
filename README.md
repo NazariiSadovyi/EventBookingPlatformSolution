@@ -6,7 +6,7 @@ Event booking platform built with **.NET 8** and **ASP.NET Core Web API**, struc
 
 ## 🏗 Architecture Overview
 
-# 🧠 Design Principles Used
+### Design Principles Used
 
 - Clean Architecture
 - Dependency Inversion
@@ -91,4 +91,25 @@ This will start:
 
 ```bash
 https://localhost:8443/swagger
+```
+
+# 💻 Option 2 — Run Locally (Without Docker)
+
+### Requirements
+
+- .NET SDK 8.x installed
+- SQL Server running locally or via Docker
+
+### Step 1 — Update connection string in "src/EBP.API/appsettings.json"
+
+### Step 2 — Run API
+
+```bash
+dotnet run --project src/EBP.API
+```
+
+### Step 3 — Access API
+
+```bash
+https://localhost:7099/swagger
 ```
