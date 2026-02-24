@@ -75,3 +75,14 @@ You can run the project either with Docker (recommended) or locally.
 
 ```bash
 docker compose up --build
+```
+
+This will start:
+- SQL Server 2022 container
+- API container
+
+### Step 2 — Access API
+
+```bash
+https://localhost:8443/swagger
+```
