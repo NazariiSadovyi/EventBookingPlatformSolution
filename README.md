@@ -6,10 +6,16 @@ Event booking platform built with **.NET 8** and **ASP.NET Core Web API**, struc
 
 ## 🏗 Architecture Overview
 
-The solution follows Clean Architecture with clear separation of concerns:
-API → Application → Domain
-API → Infrastructure
+# 🧠 Design Principles Used
 
+- Clean Architecture
+- Dependency Inversion
+- Domain-Driven Design
+- Explicit EF Configurations
+- Layered validation
+- The solution follows Clean Architecture with clear separation of concerns:
+  - API → Application → Domain
+  - API → Infrastructure
 
 ### Projects
 
